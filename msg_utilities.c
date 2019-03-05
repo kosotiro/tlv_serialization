@@ -137,6 +137,7 @@ void decode(char *data){
    //buffer for serialization
    ser_buf_t *buf =(ser_buf_t *)malloc(sizeof(ser_buf_t));
 
+   //initialize the fields of this buffer
    buf->b = (char *)malloc(*((int *)data));
    buf->next = 0;
    buf->size = *((int *)data);
@@ -360,7 +361,7 @@ void tlvdecode(void *tlvtype, ser_buf_t **buf, int *length){
 
 int main(int argc, char *argv[]){
    
-   ser_buf_t *buf;// = (char **)malloc(100);
+   ser_buf_t *buf;
 
    int size;
 
@@ -372,6 +373,12 @@ int main(int argc, char *argv[]){
    printf("size = %d\n", buf->next);
 
    decode(buf->b);
+
+   free(buf->b);
+   buf->b = NULL;
+
+   free(buf);
+   buf = NULL;
 }
 
 
